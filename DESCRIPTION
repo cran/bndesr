@@ -1,6 +1,6 @@
 Package: bndesr
 Title: Access Data from the Brazilian Development Bank (BNDES)
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: 
     person("Igor", "Laltuf", , "igorlaltuf@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5614-4404"))
@@ -8,12 +8,12 @@ Description: Allows access to data on BNDES disbursements and contracts since 19
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.2.1
-Imports: dplyr, janitor, lubridate, RCurl, readr, readxl, stringr
+Imports: curl, dplyr, janitor, lubridate, RCurl, readr, readxl, stringr
 Suggests: testthat (>= 3.0.0)
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2023-03-20 23:25:02 UTC; igorl
+Packaged: 2023-03-31 19:40:45 UTC; igorl
 Author: Igor Laltuf [aut, cre] (<https://orcid.org/0000-0002-5614-4404>)
 Maintainer: Igor Laltuf <igorlaltuf@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-03-21 08:50:12 UTC
+Date/Publication: 2023-04-03 00:20:13 UTC

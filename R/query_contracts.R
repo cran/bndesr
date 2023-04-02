@@ -10,13 +10,12 @@
 #' @return a dataframe with data for the selected year.
 #'
 #' @examples
-#' \donttest{query_contracts(year = 2012)}
+#' \dontrun{query_contracts(year = 2012)}
 #'
 #' @export
 query_contracts <- function(year = 'all') {
 
-  old <- options(scipen = 999, timeout = 240)
-  on.exit(options(old))
+  options(scipen = 999, timeout = 1500)
 
   data_contrat <- ano <- valor_contratacao_reais <- juros <- subsetor_cnae_agrup <- valor_desembolso_reais <- situacao_operacional <- prazo_carencia_meses <- prazo_amortizacao_meses <-  NULL
 
@@ -32,43 +31,43 @@ query_contracts <- function(year = 'all') {
   for (i in year) {
 
   if(i %in% c(2017:2022)){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-11-30.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-11-30.xlsx"
+    url_list <- append(x = url_list, values = link)
   }
 
   else if(i %in% c(2015:2016)){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2015-01-01_ate_2016-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2015-01-01_ate_2016-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i == 2014){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2014-01-01_ate_2014-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2014-01-01_ate_2014-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i == 2013){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2013-01-01_ate_2013-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2013-01-01_ate_2013-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i == 2012){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2012-01-01_ate_2012-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2012-01-01_ate_2012-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i == 2011){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2011-01-01_ate_2011-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2011-01-01_ate_2011-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i %in% c(2009:2010)){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2009-01-01_ate_2010-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2009-01-01_ate_2010-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i %in% c(2002:2008)){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2002-01-01_ate_2008-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2002-01-01_ate_2008-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
   }
 
@@ -123,10 +122,16 @@ query_contracts <- function(year = 'all') {
             message(paste0('Downloading file financiamentos_',file_name,'.xlsx'))
 
             # depois document, load all, test e submit to cran
-            try(
-          download.file(url_list[i],
-                        destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
-                        mode = "wb") # download the file in binary mode (needed for these xlsx files)
+            tryCatch({
+              download.file(url_list[i],
+                            destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
+                            mode = "wb") # download the file in binary mode (needed for these xlsx files)
+            },
+            # em caso de erro, interrompe a função e mostra msg de erro
+
+            error = function(e) {
+              message("Error downloading file. Try again later.", e$message)
+              stop("Error downloading file.")  }
             )
 
             # If the last year files has been updated, it will try to guess the new date
@@ -244,12 +249,20 @@ query_contracts <- function(year = 'all') {
 
     if (files_import[i] == "financiamentos_nao_automatico.xlsx") {
 
-      # import non-automatic operations
-      table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
-                                       sheet = 1,
-                                       skip = 4,
-                                       col_types = c(rep('text', 34))) |>
-        janitor::clean_names()
+      tryCatch({
+        # import non-automatic operations
+        table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
+                                         sheet = 1,
+                                         skip = 4,
+                                         col_types = c(rep('text', 34))) |>
+          janitor::clean_names()
+      },
+      # em caso de erro, interrompe a função e mostra msg de erro
+
+      error = function(e) {
+        message("Error importing file. Try again later.", e$message)
+        stop("Error importing file.")  }
+      )
 
       colnames(table_temp) <- colnames(table)
 
@@ -281,12 +294,21 @@ query_contracts <- function(year = 'all') {
 
     } else {
 
-      # import automatic operations
-      table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
-                                       sheet = 1,
-                                       skip = 5,
-                                       col_types = c(rep('text',30))) |>
-        janitor::clean_names()
+      tryCatch({
+        # import automatic operations
+        table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
+                                         sheet = 1,
+                                         skip = 5,
+                                         col_types = c(rep('text',30))) |>
+          janitor::clean_names()
+      },
+      # em caso de erro, interrompe a função e mostra msg de erro
+
+      error = function(e) {
+        message("Error importing file. Try again later.", e$message)
+        stop("Error importing file.")  }
+      )
+
 
       names_auto <- table_col_names[c(1, 2, 4:6, 8:31, 34)]
       colnames(table_temp) <- names_auto
@@ -341,6 +363,9 @@ query_contracts <- function(year = 'all') {
     dplyr::mutate(juros = round(as.numeric(juros), 2))
 
   message("Completed data query.")
+
+  old <- options(timeout = 60)
+  on.exit(options(old))
 
   return(table)
   })
