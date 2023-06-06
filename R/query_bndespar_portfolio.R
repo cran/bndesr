@@ -9,10 +9,10 @@
 #' @return a dataframe with the data
 #'
 #' @examples
-#' df <- query_bndespar_portifolio()
+#' df <- query_bndespar_portfolio()
 #'
 #' @export
-query_bndespar_portifolio <- function(year = 'all') {
+query_bndespar_portfolio <- function(year = 'all') {
 
   if ("all" %in% year) {
     year <- c(2006:2022)
