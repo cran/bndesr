@@ -1,11 +1,10 @@
-152c5e96a0ba48a03386eb0237dada0c *DESCRIPTION
+39260477c5099ba879d424cdeac63681 *DESCRIPTION
 ae4b6e49ab7b30c37cd47296c473bab8 *LICENSE
-97c930cfcc67b8358dca5fa3db6a4919 *NAMESPACE
-f1a07d0a6ff971a4214592abfd879a4b *R/query_bndespar_desimbursements.R
-3806a7642183b3acb73a42cb2084dfce *R/query_bndespar_portfolio.R
-5c9428cf48b5d1072847411dfdad1717 *R/query_contracts.R
-5f2e15047cf5bc8392d87d18db0e0c36 *R/query_desimbursements.R
-203ab972a3a80621fef1e87dd3556f93 *README.md
+b416644a0b2376200abcc0b6d88d71a8 *NAMESPACE
+5c01c2209ac2294831f874b3eeb64a76 *R/query_bndespar_desimbursements.R
+87fd3dfdea11ff2798c0047029870b4f *R/query_bndespar_portfolio.R
+035cae37b19e2b2ce8e16fe5057bbb76 *R/query_contracts.R
+e58859c56b0012de5cc2ab74aa75ad56 *R/query_desimbursements.R
 8a1d044e229342f2191af9e9f5eb7f6f *inst/CITATION
 c45f826118ea4b54fd2c8687c5242a9d *man/query_bndespar_desimbursements.Rd
 76a7f4bf3ac9b5dc55d0cfebf3d63353 *man/query_bndespar_portfolio.Rd
